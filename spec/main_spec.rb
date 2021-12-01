@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+# spec/main_spec.rb
+
 require './lib/main'
 
 initial_grid = [[nil, nil, nil, nil, nil, nil, nil],
@@ -145,28 +147,32 @@ describe Game do
     end
     context 'when Player 2 has four in a row' do
       it 'aligned vertically' do
+        subject.turn = 1
         subject.instance_variable_set(:@board, Marshal.load(Marshal.dump(o_vertical_win_grid)))
         expect(subject.check_result).to eql(1) # 1 is the state of P2 victory
       end
       it 'aligned horizontally' do
+        subject.turn = 1
         subject.instance_variable_set(:@board, Marshal.load(Marshal.dump(o_horizontal_win_grid)))
         expect(subject.check_result).to eql(1) # 1 is the state of P2 victory
       end
       it 'aligned diagonally, bottom-left to top-right' do
+        subject.turn = 1
         subject.instance_variable_set(:@board, Marshal.load(Marshal.dump(o_diagonal_win_grid1)))
         expect(subject.check_result).to eql(1) # 1 is the state of P2 victory
       end
       it 'aligned diagonally, top-left to bottom-right' do
+        subject.turn = 1
         subject.instance_variable_set(:@board, Marshal.load(Marshal.dump(o_diagonal_win_grid2)))
         expect(subject.check_result).to eql(1) # 1 is the state of P2 victory
       end
     end
     context 'when neither player has four in a row' do
-      it 'board is not full' do
+      it 'and the board is not full' do
         subject.instance_variable_set(:@board, Marshal.load(Marshal.dump(test_grid)))
         expect(subject.check_result).to eql(2) # 2 is the state of an ongoing game
       end
-      it 'board is full' do
+      it 'and the board is full' do
         subject.instance_variable_set(:@board, Marshal.load(Marshal.dump(full_grid)))
         expect(subject.check_result).to eql(3) # 3 is the state of a drawn game
       end
